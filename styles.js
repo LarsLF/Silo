@@ -58,15 +58,11 @@ var styles = StyleSheet.create({
     height: 30,
     textAlign: 'center',
   },
-  center: {
-    textAlign: 'center',
-  },
   actionText: {
     color: '#fff',
     fontSize: 16,
     textAlign: 'center',
   },
-
   action: {
     backgroundColor: '#FEB542',
     borderColor: '#fff',

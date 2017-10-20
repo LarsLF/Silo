@@ -5,6 +5,7 @@ import * as firebase from 'firebase';
 import StatusBar from './StatusBar';
 import ActionButton from './ActionButton';
 import ListItem from './ListItem';
+import ListAnswer from './ListAnswer';
 import styles from '../styles';
 import HomePage from './HomePage';
 import BottomToolbar from 'react-native-bottom-toolbar'
@@ -29,10 +30,13 @@ const {
 class Topic extends Component {
   constructor(props) {
     super(props);
+    
+    this.answersRef = this.getRef().child('items');
+    
     this.state = { loading: false };
      this.fireRef = firebase.storage().ref('items')
-    //  this.AnswersRef = firebase.storage().ref('items/'+this.props.item._key+'/answers')
-     this.itemsRef = firebase.database().ref().child('items/'+this.props.item._key+'/answers')
+     this.fireAnswersRef = firebase.storage().ref('items/'+this.props.item._key+'/answers')
+     this.answersRef = firebase.database().ref().child('items/'+this.props.item._key+'/answers')
     }
     
   getRef() {
@@ -40,8 +44,32 @@ class Topic extends Component {
   }
 
   _addAnswer() {
-    this.itemsRef.push({ title: this.state.text });
+    this.answersRef.push({ title: this.state.text });
   }
+
+  
+  // componentDidMount() {     
+  //   this.listenForAnswers(this.fireAnswersRef);
+  // }
+  
+  // listenForAnswers(fireAnswersRef) {
+  //   fireAnswersRef.on('value', (snap) => {
+
+  //     // get children as an array
+  //     var answers = [];
+  //     snap.forEach((child) => {
+  //       answers.push({
+  //         title: child.val().title,
+  //         _key: child.keyt
+  //       });
+  //     });
+
+  //     this.setState({
+  //       dataSource: this.state.dataSource.cloneWithRows(answers)
+  //     });
+  //   });
+  // }
+
 
   render() {
     return (
@@ -51,7 +79,16 @@ class Topic extends Component {
         <TouchableHighlight onPress={this.props.onPress}>
           <View style={styles.li}>
             <Text style={styles.liText}>{this.props.item.title}</Text>
-            <Text style={styles.liText}>{this.props.item.answers.title}</Text>
+            
+            <ListView
+            dataSource={this.props.item.answers}
+            renderRow={this._renderAnswers}
+            enableEmptySections={true}
+            style={styles.listview}/>
+
+            {/* <Text>{this.props.item._key.answers._key}</Text> */}
+            {/* <Text style={styles.liText}>{this.props.item.answer.title}</Text> */}
+            
           </View>
         </TouchableHighlight>
 
@@ -88,6 +125,11 @@ class Topic extends Component {
 
     )
   }
+  
+  _renderAnswers(answer) {
+      <ListAnswer answer={answer} /> 
+  }
+
 }
 
 //Exporterer til app.js så den kan bruges

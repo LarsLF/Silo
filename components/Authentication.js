@@ -30,19 +30,13 @@ class Authentication extends Component {
       firebase.auth().currentUser.getIdToken().then(function(idToken) {
         AsyncStorage.setItem('id_token', idToken);
         console.log(idToken);
-
-//Skifter side i appen
-
-        /*Alert.alert( 'Sign In Successfully!', 'Click the button to go to Home Page!'); */
-
-        //.Homepage er hvilken side den skal gå til
         Actions.HomePage();
       })
       .catch((err) => {
         this.setState({ error: 'Failed to obtain user ID token.'+err, loading: false });
       });
     })
-    /*
+    
     .catch((err) => {
         //Login was not successful, let's create a new account
         firebase.auth().createUserWithEmailAndPassword(username, password)
@@ -61,13 +55,13 @@ class Authentication extends Component {
         .catch((err) => {
             this.setState({ error: 'Authentication failed. '+err, loading: false });
         });
-    }); */
+    });
   }
   renderButtonOrSpinner() {
     if (this.state.loading) {
         return <ActivityIndicator size='small' />;    
     }
-    return <Button color="#000000" onPress={this.userAuth.bind(this)} title="Log in/Sign up" />;
+    return <Button color="#000000" onPress={this.userAuth.bind(this)} title="Log in" />;
   }
 
 

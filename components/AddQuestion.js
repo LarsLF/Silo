@@ -78,6 +78,7 @@ class AddQuestion extends Component {
   _addItem() {
     this.itemsRef.push({ title: this.state.text });
   }
+  
 }
 
 //Exporterer til app.js så den kan bruges

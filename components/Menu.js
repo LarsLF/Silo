@@ -5,6 +5,7 @@ import * as firebase from 'firebase';
 import StatusBar from './StatusBar';
 import ActionButton from './ActionButton';
 import ListItem from './ListItem';
+import ListAnswer from './ListAnswer';
 import styles from '../styles';
 import HomePage from './HomePage';
 import About from './About';
@@ -13,8 +14,6 @@ import FAQ from './FAQ';
 import GuideToIcons from './GuideToIcons';
 import NotificationSettings from './NotificationSettings';
 import SendFeedback from './SendFeedback';
-
-
 
 const {
   AsyncStorage,
@@ -51,9 +50,11 @@ class Menu extends Component {
       console.log('AsyncStorage error: ' + error.message);
     }
   }
+
   getRef() {
     return firebase.database().ref();
   }
+
   listenForItems(itemsRef) {
     itemsRef.on('value', (snap) => {
 
@@ -72,6 +73,7 @@ class Menu extends Component {
 
     });
   }
+
   componentDidMount() {
     this.listenForItems(this.itemsRef);
   }
@@ -123,6 +125,7 @@ class Menu extends Component {
       </KeyboardAvoidingView>
     )
   }
+
   _addItem() {
     this.itemsRef.push({ title: this.state.text });
   }

@@ -98,12 +98,6 @@ class HomePage extends Component {
   _renderItem(item) {
     const onPress = () => {
       Actions.Topic({ title: item.title, item: item});
-        // null,
-        // [
-        //   {text: 'Yes', onPress: (text) => Actions.Topic()},
-        //   {text: 'Cancel', onPress: (text) => console.log('Cancelled')}
-        // ],
-        // {cancelable: false}
     };
     return (
       <ListItem item={item} onPress={onPress} />
